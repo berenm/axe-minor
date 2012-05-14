@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import os
+import sys
 from gi.repository import Gtk, GtkSource, GObject
 
 def get_child_by_name(parent, name):
@@ -163,40 +164,59 @@ class Bounds():
 
 # Gtk.main()
 
-GObject.type_register(GtkSource.View)
+if sys.argv[1] == 'hex':
+  GObject.type_register(GtkSource.View)
 
-builder = Gtk.Builder()
-builder.add_from_file('HexDump.ui')
+  builder = Gtk.Builder()
+  builder.add_from_file('HexDump.ui')
 
-window = builder.get_object('window')
-paned = window.get_child().get_child()
-lineview = paned.get_child().get_child1()
-hexview = paned.get_child().get_child2().get_child1()
-ascview = paned.get_child().get_child2().get_child2()
+  window = builder.get_object('window')
+  paned = window.get_child().get_child()
+  lineview = paned.get_child().get_child1()
+  hexview = paned.get_child().get_child2().get_child1()
+  ascview = paned.get_child().get_child2().get_child2()
 
-lm = GtkSource.LanguageManager.get_default()
-lineview.set_buffer(GtkSource.Buffer.new_with_language(lm.get_language("python")))
-hexview.set_buffer(GtkSource.Buffer.new_with_language(lm.get_language("python")))
-ascview.set_buffer(GtkSource.Buffer.new_with_language(lm.get_language("python")))
+  # lm = GtkSource.LanguageManager.get_default()
+  # lineview.set_buffer(GtkSource.Buffer.new_with_language(lm.get_language("python")))
+  # hexview.set_buffer(GtkSource.Buffer.new_with_language(lm.get_language("python")))
+  # ascview.set_buffer(GtkSource.Buffer.new_with_language(lm.get_language("python")))
 
-tt = builder.get_object('texttagtable')
-lineview.get_buffer().create_tag(tag_name='text', font='Monospace 8')
-hexview.get_buffer().create_tag(tag_name='text', font='Monospace 8')
-ascview.get_buffer().create_tag(tag_name='text', font='Monospace 8')
+  tt = builder.get_object('texttagtable')
+  lineview.get_buffer().create_tag(tag_name='text', font='Monospace 8')
+  hexview.get_buffer().create_tag(tag_name='text', font='Monospace 8')
+  ascview.get_buffer().create_tag(tag_name='text', font='Monospace 8')
 
-f = File('test.py')
-d = f.readhex(Bounds(0, -1))
-lineview.get_buffer().set_text(d[0])
-hexview.get_buffer().set_text(d[1])
-ascview.get_buffer().set_text(d[2])
+  f = File('test.py')
+  d = f.readhex(Bounds(0, -1))
+  lineview.get_buffer().set_text(d[0])
+  hexview.get_buffer().set_text(d[1])
+  ascview.get_buffer().set_text(d[2])
 
-bounds = lineview.get_buffer().get_bounds()
-lineview.get_buffer().apply_tag_by_name('text', bounds[0], bounds[1])
-bounds = hexview.get_buffer().get_bounds()
-hexview.get_buffer().apply_tag_by_name('text', bounds[0], bounds[1])
-bounds = ascview.get_buffer().get_bounds()
-ascview.get_buffer().apply_tag_by_name('text', bounds[0], bounds[1])
+  bounds = lineview.get_buffer().get_bounds()
+  lineview.get_buffer().apply_tag_by_name('text', bounds[0], bounds[1])
+  bounds = hexview.get_buffer().get_bounds()
+  hexview.get_buffer().apply_tag_by_name('text', bounds[0], bounds[1])
+  bounds = ascview.get_buffer().get_bounds()
+  ascview.get_buffer().apply_tag_by_name('text', bounds[0], bounds[1])
 
-builder.connect_signals(Window())
-window.show()
-Gtk.main()
+  builder.connect_signals(Window())
+  window.show()
+  Gtk.main()
+
+else:
+  GObject.type_register(GtkSource.View)
+
+  builder = Gtk.Builder()
+  builder.add_from_file('Window.ui')
+
+  window = builder.get_object('window')
+  tb = window.get_child().get_children()[0].get_children()[1]
+  toolbar = builder.get_object('toolbar')
+  toolbar.get_style_context().add_class(Gtk.STYLE_CLASS_PRIMARY_TOOLBAR)
+
+  for o in builder.get_objects():
+    print Gtk.Buildable.get_name(o)
+
+  builder.connect_signals(Window())
+  window.show()
+  Gtk.main()
