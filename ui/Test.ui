@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <object class="GtkWindow" id="TestWindow">
+    <property name="can_focus">False</property>
+    <signal name="destroy" handler="on_destroy" swapped="no"/>
+    <child>
+      <object class="GtkScrolledWindow" id="scroll">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="shadow_type">in</property>
+        <child>
+          <object class="GtkTreeView" id="treeview">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="model">datastore</property>
+            <property name="headers_clickable">False</property>
+            <property name="expander_column">name</property>
+            <property name="search_column">0</property>
+            <child internal-child="selection">
+              <object class="GtkTreeSelection" id="treeview-selection"/>
+            </child>
+            <child>
+              <object class="GtkTreeViewColumn" id="name">
+                <property name="title" translatable="yes">name</property>
+                <child>
+                  <object class="GtkCellRendererPixbuf" id="icon"/>
+                  <attributes>
+                    <attribute name="icon-name">0</attribute>
+                  </attributes>
+                </child>
+                <child>
+                  <object class="GtkCellRendererText" id="text"/>
+                  <attributes>
+                    <attribute name="text">0</attribute>
+                  </attributes>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkTreeViewColumn" id="data">
+                <property name="title" translatable="yes">data</property>
+                <property name="expand">True</property>
+                <child>
+                  <object class="GtkCellRendererText" id="data1"/>
+                  <attributes>
+                    <attribute name="text">1</attribute>
+                  </attributes>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkTreeStore" id="datastore">
+    <columns>
+      <!-- column-name name -->
+      <column type="gchararray"/>
+      <!-- column-name data -->
+      <column type="glong"/>
+    </columns>
+  </object>
+  <object class="GtkTextBuffer" id="textbuffer1">
+    <property name="text">00000000
+00000010
+00000020</property>
+  </object>
+</interface>
