@@ -37,6 +37,18 @@ class RawChunk():
   def readhex(self, limit=256):
     return self._file.readhex(self._bounds, limit)
 
+  def readhexs(self, bounds, bytesperline=16):
+    return self._file.readhexs(self._bounds, bytesperline)
+
+  def crc32(self):
+    return self._file.crc32(self._bounds)
+    
+  def adler32(self):
+    return self._file.adler32(self._bounds)
+    
+  def md5(self):
+    return self._file.md5(self._bounds)
+
 
   def _split(self, position):
     # print 'D: cutting %s at %d' % (self._bounds, position)

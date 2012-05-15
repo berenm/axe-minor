@@ -5,13 +5,14 @@
     <property name="width_request">512</property>
     <property name="height_request">512</property>
     <property name="can_focus">False</property>
+    <signal name="destroy" handler="on_quit" swapped="no"/>
     <child>
-      <object class="GtkBox" id="box1">
+      <object class="GtkBox" id="mainbox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkBox" id="box2">
+          <object class="GtkBox" id="topbox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
@@ -85,6 +86,7 @@
                             <property name="can_focus">False</property>
                             <property name="use_underline">True</property>
                             <property name="use_stock">True</property>
+                            <signal name="activate" handler="on_quit" swapped="no"/>
                           </object>
                         </child>
                       </object>
@@ -192,22 +194,6 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="toolbar_style">icons</property>
-                <signal name="destroy" handler="on_destroy" swapped="no"/>
-                <child>
-                  <object class="GtkToolButton" id="toolbutton1">
-                    <property name="use_action_appearance">False</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="use_action_appearance">False</property>
-                    <property name="label" translatable="yes">toolbutton</property>
-                    <property name="use_underline">True</property>
-                    <property name="stock_id">gtk-sort-descending</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="homogeneous">True</property>
-                  </packing>
-                </child>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -223,25 +209,28 @@
           </packing>
         </child>
         <child>
-          <object class="GtkPaned" id="paned1">
+          <object class="GtkPaned" id="mainpaned">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <child>
-              <object class="GtkTextView" id="textview2">
+              <object class="GtkViewport" id="treeviewport">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <placeholder/>
+                </child>
               </object>
               <packing>
-                <property name="resize">True</property>
+                <property name="resize">False</property>
                 <property name="shrink">True</property>
               </packing>
             </child>
             <child>
-              <object class="GtkPaned" id="paned2">
+              <object class="GtkPaned" id="datapaned">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <child>
-                  <object class="GtkTextView" id="textview1">
+                  <object class="GtkTextView" id="dataview">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                   </object>
@@ -251,7 +240,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkDrawingArea" id="minimap">
+                  <object class="GtkDrawingArea" id="datamap">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                   </object>
@@ -274,7 +263,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkStatusbar" id="statusbar1">
+          <object class="GtkStatusbar" id="statusbar">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>

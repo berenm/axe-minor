@@ -18,7 +18,7 @@ remains = open_file(sys.argv[1])
 before, chopped, remains = remains.chop(Bounds(-28, -1))
 assert(remains is None)
 
-footer, remains = parse(chopped, "footer", [Raw("unknown",4), Raw("unknown",4), Raw("unknown",4), Raw("unknown",4), FourCC("magic"), Raw("unknown",4), uint32("index_size")])
+footer, remains = parse(chopped, "footer", [Raw("UUID (CoCreateGuid)",16), FourCC("magic"), Raw("unknown",4), uint32("index_size")])
 assert(remains is None)
 
 before, remains = before.cutat(-footer.index_size.value)

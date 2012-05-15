@@ -1,6 +1,7 @@
 import sys
 import os
-import logging
+import zlib
+import md5
 
 class File:
   _files = {}
@@ -29,14 +30,14 @@ class File:
     return self._length
 
 
-  def read(self, bounds, limit):
+  def read(self, bounds, limit=None):
     bounds = bounds.apply(self._length)
     
     self._file.seek(bounds.start, os.SEEK_SET)
     # print 'D: reading %s (len: %d) from %d to %d' % (self._name, self._length, bounds.start, bounds.end)
 
     count, append = (bounds.size, '')
-    if count > limit:
+    if limit is not None and count > limit:
       count, append = (limit, '...')
 
     return self._file.read(count) + append
@@ -55,6 +56,32 @@ class File:
     if len(dump) > 0:
       dump = dump[1:]
     return dump
+
+  def readhexs(self, bounds, bytesperline=16):
+    binary = self.read(bounds)
+
+    hexd = lambda data: ' '.join('{:02X}'.format(ord(i)) for i in data)
+    ascd = lambda data: ''.join(31 < ord(i) < 127 and i or '.' for i in data)
+
+    linedump, hexdump, asciidump = ('', '', '')
+    for line in range(0, len(binary), bytesperline):
+      data = binary[line : line + bytesperline]
+      linedump, hexdump, asciidump = (linedump + '\n', hexdump + '\n', asciidump + '\n')
+      linedump, hexdump, asciidump = (linedump + '{:08X}'.format(line), hexdump + '{}'.format(hexd(data)), asciidump + '{}'.format(ascd(data)))
+    
+    linedump, hexdump, asciidump = (linedump.strip('\n'), hexdump.strip('\n'), asciidump.strip('\n'))
+    return (linedump, hexdump, asciidump)
+
+  def crc32(self, bounds):
+    return zlib.crc32(self.read(bounds))
+
+  def adler32(self, bounds):
+    return zlib.adler32(self.read(bounds))
+
+  def md5(self, bounds):
+    m = md5.new()
+    m.update(self.read(bounds))
+    return m.digest()
 
   def close(self):
     pass

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <object class="GtkTextBuffer" id="asciibuffer">
+  <object class="GtkTextBuffer" id="ascbuffer">
     <property name="text" translatable="yes">................
 ................
 ................</property>
@@ -18,8 +18,9 @@
   </object>
   <object class="GtkWindow" id="window">
     <property name="width_request">540</property>
+    <property name="height_request">128</property>
     <property name="can_focus">False</property>
-    <signal name="destroy" handler="on_destroy" swapped="no"/>
+    <signal name="destroy" handler="on_quit" swapped="no"/>
     <child>
       <object class="GtkScrolledWindow" id="scroll">
         <property name="visible">True</property>
@@ -30,10 +31,10 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkPaned" id="linepane">
+              <object class="GtkPaned" id="linepaned">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <signal name="size-allocate" handler="on_check_resize" swapped="no"/>
+                <signal name="size-allocate" handler="on_resize" swapped="no"/>
                 <child>
                   <object class="GtkTextView" id="lineview">
                     <property name="visible">True</property>
@@ -49,7 +50,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkPaned" id="datapane">
+                  <object class="GtkPaned" id="datapaned">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <child>
@@ -68,13 +69,13 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkTextView" id="asciiview">
+                      <object class="GtkTextView" id="ascview">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="has_tooltip">True</property>
                         <property name="left_margin">10</property>
                         <property name="right_margin">2</property>
-                        <property name="buffer">asciibuffer</property>
+                        <property name="buffer">ascbuffer</property>
                       </object>
                       <packing>
                         <property name="resize">False</property>
