@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
+  <object class="GtkTreeStore" id="treestore1">
+    <columns>
+      <!-- column-name name -->
+      <column type="gchararray"/>
+      <!-- column-name intvalue -->
+      <column type="gint"/>
+    </columns>
+  </object>
   <object class="GtkWindow" id="window">
     <property name="width_request">512</property>
     <property name="height_request">512</property>
@@ -217,7 +225,58 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <placeholder/>
+                  <object class="GtkTreeView" id="treeview1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="model">treestore1</property>
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection" id="treeview-selection1"/>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="treeviewcolumn1">
+                        <property name="title" translatable="yes">column</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext1">
+                            <property name="cell_background_gdk">#000000000000</property>
+                            <property name="cell_background_rgba">rgba(0,0,0,0)</property>
+                            <property name="xpad">2</property>
+                            <property name="ypad">2</property>
+                            <property name="xalign">0</property>
+                            <property name="background_gdk">#000000000000</property>
+                            <property name="font">Normal</property>
+                            <property name="foreground_gdk">#000000000000</property>
+                            <property name="background_rgba">rgba(0,0,0,0)</property>
+                            <property name="foreground_rgba">rgba(0,0,0,0)</property>
+                          </object>
+                          <attributes>
+                            <attribute name="markup">0</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="treeviewcolumn2">
+                        <property name="title" translatable="yes">column</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext2">
+                            <property name="cell_background_gdk">#000000000000</property>
+                            <property name="cell_background_rgba">rgba(0,0,0,0)</property>
+                            <property name="xpad">2</property>
+                            <property name="ypad">2</property>
+                            <property name="xalign">0</property>
+                            <property name="background_gdk">#000000000000</property>
+                            <property name="font">Normal</property>
+                            <property name="foreground_gdk">#000000000000</property>
+                            <property name="background_rgba">rgba(0,0,0,0)</property>
+                            <property name="foreground_rgba">rgba(0,0,0,0)</property>
+                          </object>
+                          <attributes>
+                            <attribute name="text">1</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
                 </child>
               </object>
               <packing>

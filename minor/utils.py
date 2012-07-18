@@ -107,7 +107,7 @@ class Bounds():
   @property
   def size(self):
     if self.crossed:
-      return -1
+      return None
     else:
       return self._end - self._start + 1
 
